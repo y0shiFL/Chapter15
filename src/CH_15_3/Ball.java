@@ -22,7 +22,7 @@ public class Ball extends Application {
     private Pane pane = new Pane();
     private Circle circle = new Circle();
     HBox hBox2 = new HBox();
-    ArrayList<Image> yoshiImage = new ArrayList<>();
+    ImageView yoshiImage;
     public static void main(String[] args) {
         launch(args);
     }
@@ -37,12 +37,12 @@ public class Ball extends Application {
 
         String imageFileName = "CH_15_3/image/a-day-with-black-yoshi.png";
         Image img = new Image(imageFileName);
-        yoshiImage.add(img);
+        yoshiImage = new ImageView(img);
 
-        hBox2.getChildren().add(new ImageView(yoshiImage.get(0)));
-        hBox2.setAlignment(Pos.CENTER);*/
+        //hBox2.getChildren().add(new ImageView(yoshiImage.get(0)));
+        //hBox2.setAlignment(Pos.CENTER);
 
-        pane.getChildren().addAll(circle);
+        pane.getChildren().addAll(yoshiImage);
 
         HBox hbox = new HBox();
         Button bt1 = new Button("Left");
@@ -90,6 +90,7 @@ public class Ball extends Application {
     }
     public void moveRight()
     {
+        //yoshiImage.setX();
         int maxCenterX = (int)pane.getWidth()+(int)circle.getRadius() - 5;
         int newRight = (int)circle.getCenterX()+15;
         if( newRight > maxCenterX )
