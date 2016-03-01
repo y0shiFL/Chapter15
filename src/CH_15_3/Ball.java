@@ -30,21 +30,13 @@ public class Ball extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-
-        circle.setRadius(80);
-        circle.setCenterX(250);
-        circle.setCenterY(250);
-
         String imageFileName = "CH_15_3/image/a-day-with-black-yoshi.png";
         Image img = new Image(imageFileName);
         yoshiImage = new ImageView(img);
-
-        //hBox2.getChildren().add(new ImageView(yoshiImage.get(0)));
-        //hBox2.setAlignment(Pos.CENTER);
-
         pane.getChildren().addAll(yoshiImage);
 
         HBox hbox = new HBox();
+
         Button bt1 = new Button("Left");
 
         bt1.setOnAction(e->{
@@ -83,6 +75,7 @@ public class Ball extends Application {
 
 
         yoshiImage.setX(pane.getWidth()/2 - yoshiImage.getImage().getWidth()/2);
+        yoshiImage.setY(pane.getWidth()/2 - yoshiImage.getImage().getWidth()/2);
 
     }
     public void moveLeft()
@@ -100,30 +93,18 @@ public class Ball extends Application {
 
     public void moveUp()
     {
-        int minCenterY = -(int)circle.getRadius() +5;
-        int newUp = (int)circle.getCenterY()-15;
-        if(newUp < minCenterY)
-            newUp = minCenterY;
-        circle.setCenterY(newUp);
+
+        double minY = -yoshiImage.getImage().getHeight() + 5;
+        double newY = yoshiImage.getY() - 15;
+        yoshiImage.setY( Math.max(newY, minY) );
     }
 
     public void moveDown()
     {
-        int maxCenterY = (int)pane.getWidth() + (int)circle.getRadius()- 5;
-        int newDown = (int)circle.getCenterY()+15;
-        if(newDown > maxCenterY)
-            newDown = maxCenterY;
-        circle.setCenterY(newDown);
+        double maxY = pane.getWidth () - 5;
+        double newY = yoshiImage.getY() + 15;
+        yoshiImage.setY( Math.min(newY, maxY) );
     }
 
- /*   *//*public void moveImgLeft()
-    {
-        int minCenterX = -(int)hBox2.get;
-        int newImgLeft = (int)hBox2.getWidth() + 15;
-        if(newImgLeft < minCenterX)
-        {
-            newImgLeft = minCenterX;
-            hBox2.setMinWidth(newImgLeft);
-        }
-    }*/
+
 }
