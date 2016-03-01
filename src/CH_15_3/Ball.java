@@ -75,27 +75,27 @@ public class Ball extends Application {
         borderPane.setBottom(hbox);
         //borderPane.setTop(hBox2);
 
+
         Scene scene = new Scene(borderPane,500,500);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Left,Right,Up,or Down");
         primaryStage.show();
+
+
+        yoshiImage.setX(pane.getWidth()/2 - yoshiImage.getImage().getWidth()/2);
+
     }
     public void moveLeft()
     {
-        int minCenterX = -(int)circle.getRadius() + 5;
-        int newLeft = (int)circle.getCenterX()-15;
-        if( newLeft < minCenterX )
-            newLeft = minCenterX;
-        circle.setCenterX(newLeft);
+        double minX = -yoshiImage.getImage().getWidth() + 5;
+        double newX = yoshiImage.getX() - 15;
+        yoshiImage.setX( Math.max(newX, minX) );
     }
     public void moveRight()
     {
-        //yoshiImage.setX();
-        int maxCenterX = (int)pane.getWidth()+(int)circle.getRadius() - 5;
-        int newRight = (int)circle.getCenterX()+15;
-        if( newRight > maxCenterX )
-            newRight = maxCenterX;
-            circle.setCenterX(newRight);
+        double maxX = pane.getWidth () - 5;
+        double newX = yoshiImage.getX() + 15;
+        yoshiImage.setX( Math.min(newX, maxX) );
     }
 
     public void moveUp()
