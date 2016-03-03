@@ -4,6 +4,10 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
@@ -15,61 +19,46 @@ import javafx.util.Duration;
  * Created by yoshi on 3/2/2016.
  */
 public class RunningFanPane extends Pane {
-    private int radius;
-    private double centerX;
-    private double centerY;
+    private int startAngle = 0;
+    Group listOfArcs = new Group();
 
-
-    private Color fanColor = Color.WHITE;
-
-    public RunningFanPane()
+    public RunningFanPane(int radius, Color fanColor)
     {
-
-    }
-
-    public RunningFanPane(int radius,Color fanColor)
-    {
-        this.radius = radius;
-        this.fanColor = fanColor;
-        paintFan();
-    }
-    public RunningFanPane(Color fanColor){
-        this.fanColor = fanColor;
-    }
-
-    protected void paintFan() {
         Circle c1 = new Circle(radius, Color.WHITE);
-
         c1.centerXProperty().bind(widthProperty().divide(2));
         c1.centerYProperty().bind(heightProperty().divide(2));
         c1.setStroke(Color.BLACK);
-
-        getChildren().clear();
         getChildren().add(c1);
 
-        for (int a = 30; a < 360; a += 90) {
-
-            Arc arc = new Arc(centerX, centerY, radius, radius, a, 35);
+        int a = startAngle;
+        for(int i=0; i<4; i++, a+=90) {
             // Create an arc
+            Arc arc = new Arc(0, 0, radius, radius, a, 35);
             arc.centerXProperty().bind(c1.centerXProperty());
             arc.centerYProperty().bind(c1.centerYProperty());
             arc.radiusXProperty().bind(c1.radiusProperty().subtract((10)));
             arc.radiusYProperty().bind(c1.radiusProperty().subtract((10)));
             arc.setFill(fanColor);
             arc.setType(ArcType.ROUND); // Set arc type
-            getChildren().add(arc);
-
-            Timeline timeline = new Timeline();
-            timeline.setCycleCount(2);
-            //timeline.getKeyFrames().add(new KeyFrame(Duration.millis(5000),);
-
+            listOfArcs.getChildren().add(arc);
         }
+        getChildren().add(listOfArcs);
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(33), eventHandler));
+        timeline.setCycleCount(200);
+        timeline.play();
     }
 
-        public void move()
-        {
-
+    EventHandler<ActionEvent> eventHandler = e -> {
+        startAngle += 1;
+        int a=startAngle;
+        for(Node n : listOfArcs.getChildren()){
+            Arc arc = (Arc)n;
+            arc.setStartAngle(a);
+            a+=90;
         }
+    };
 
-    }
+
+}
 
