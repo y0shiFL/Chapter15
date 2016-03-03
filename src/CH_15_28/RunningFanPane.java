@@ -6,8 +6,12 @@ import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
@@ -24,14 +28,24 @@ public class RunningFanPane extends Pane {
 
     public RunningFanPane(int radius, Color fanColor)
     {
+
+
+        HBox hbox = new HBox();
+        hbox.setAlignment(Pos.BOTTOM_CENTER);
         Circle c1 = new Circle(radius, Color.WHITE);
+        Button play = new Button("Play");
+        Button pause = new Button("Pause");
+        Button reverse = new Button("Reverse");
         c1.centerXProperty().bind(widthProperty().divide(2));
         c1.centerYProperty().bind(heightProperty().divide(2));
         c1.setStroke(Color.BLACK);
-        getChildren().add(c1);
+        hbox.getChildren().addAll(play,pause);
+        getChildren().addAll(c1,hbox);
+
 
         int a = startAngle;
-        for(int i=0; i<4; i++, a+=90) {
+        for (int i = 0; i < 4; i++, a += 90)
+        {
             // Create an arc
             Arc arc = new Arc(0, 0, radius, radius, a, 35);
             arc.centerXProperty().bind(c1.centerXProperty());
@@ -46,21 +60,36 @@ public class RunningFanPane extends Pane {
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(.3), eventHandler));
         timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
-    }
+
+
+        play.setOnAction(e ->{
+            timeline.play();
+        });
+        pause.setOnAction(e ->{
+            timeline.pause();
+        });
+            }
+
+
 
     EventHandler<ActionEvent> eventHandler = e -> {
         startAngle += 1;
-        int a=startAngle;
-        for(Node n : listOfArcs.getChildren()){
-            Arc arc = (Arc)n;
+        int a = startAngle;
+        for (Node n : listOfArcs.getChildren()) {
+            Arc arc = (Arc) n;
             arc.setStartAngle(a);
-            if(a>=270)
-                a-=270;
+            if (a >= 270)
+                a -= 270;
             else
-            a+=90;
+                a += 90;
         }
     };
+
+
+    private void Reverse()
+    {
+
+    }
 }
 
 
