@@ -44,8 +44,8 @@ public class RunningFanPane extends Pane {
         }
         getChildren().add(listOfArcs);
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(33), eventHandler));
-        timeline.setCycleCount(200);
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(.3), eventHandler));
+        timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
 
@@ -55,10 +55,13 @@ public class RunningFanPane extends Pane {
         for(Node n : listOfArcs.getChildren()){
             Arc arc = (Arc)n;
             arc.setStartAngle(a);
+            if(a>=270)
+                a-=270;
+            else
             a+=90;
         }
     };
-
-
 }
+
+
 
