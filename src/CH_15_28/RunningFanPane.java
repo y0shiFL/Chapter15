@@ -31,7 +31,7 @@ public class RunningFanPane extends Pane {
         Circle c1 = new Circle(radius, Color.WHITE);
         c1.centerXProperty().bind(widthProperty().divide(2));
         c1.centerYProperty().bind(heightProperty().divide(2));
-        c1.setStroke(Color.BLACK);
+        c1.setStroke( fanColor );
         getChildren().add(c1);
 
         for(int i=0, a=0; i<5; i++, a+=72) {

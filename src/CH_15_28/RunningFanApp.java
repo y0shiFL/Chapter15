@@ -45,7 +45,7 @@ public class RunningFanApp extends Application {
             public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
                 if(newValue != null) {
                     selectedFan = (RunningFanPane)newValue.getUserData();
-                    selectedFan.setStyle("-fx-border-color: black");
+                    selectedFan.setStyle("-fx-border-color: DarkGray");
                 }
                 if(oldValue != null){
                     ( (RunningFanPane)oldValue.getUserData() ).setStyle("");
@@ -81,7 +81,7 @@ public class RunningFanApp extends Application {
         VBox buttonPane = new VBox(10);
         buttonPane.setPadding(new Insets(10));
         buttonPane.getChildren().addAll( rbRow1, rbRow2, btReverse, btForward, btPlay, btPause);
-        buttonPane.setStyle("-fx-border-color: black");
+        buttonPane.setStyle("-fx-border-color: DarkGray");
 
         BorderPane borderPane = new BorderPane(gridPane,null,buttonPane,null,null);
 
