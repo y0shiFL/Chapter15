@@ -6,6 +6,7 @@ import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
@@ -18,20 +19,22 @@ import javafx.util.Duration;
 /**
  * Created by yoshi on 3/2/2016.
  */
+
+
 public class RunningFanPane extends Pane {
-    private int startAngle = 0;
-    Group listOfArcs = new Group();
+
+    Timeline timeline;
 
     public RunningFanPane(int radius, Color fanColor)
     {
+        setPadding(new Insets(10));
         Circle c1 = new Circle(radius, Color.WHITE);
         c1.centerXProperty().bind(widthProperty().divide(2));
         c1.centerYProperty().bind(heightProperty().divide(2));
         c1.setStroke(Color.BLACK);
         getChildren().add(c1);
 
-        int a = startAngle;
-        for(int i=0; i<4; i++, a+=90) {
+        for(int i=0, a=0; i<5; i++, a+=72) {
             // Create an arc
             Arc arc = new Arc(0, 0, radius, radius, a, 35);
             arc.centerXProperty().bind(c1.centerXProperty());
@@ -40,23 +43,38 @@ public class RunningFanPane extends Pane {
             arc.radiusYProperty().bind(c1.radiusProperty().subtract((10)));
             arc.setFill(fanColor);
             arc.setType(ArcType.ROUND); // Set arc type
-            listOfArcs.getChildren().add(arc);
+            getChildren().add(arc);
         }
-        getChildren().add(listOfArcs);
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(33), eventHandler));
-        timeline.setCycleCount(200);
+        timeline = new Timeline(new KeyFrame(Duration.millis(33), eventHandler));
+        timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
 
+    public enum FanDirection {CLOCKWISE, COUNTERCLOCKWISE };
+
+    private FanDirection fanDirection = FanDirection.CLOCKWISE;
+
+    public FanDirection getFanDirection() {
+        return fanDirection;
+    }
+
+    public void setFanDirection(FanDirection fanDirection) {
+        this.fanDirection = fanDirection;
+    }
+
+    public void pause() { timeline.pause(); }
+    public void play() { timeline.play(); }
+    
+    public double someValue;
+
+
+
     EventHandler<ActionEvent> eventHandler = e -> {
-        startAngle += 1;
-        int a=startAngle;
-        for(Node n : listOfArcs.getChildren()){
-            Arc arc = (Arc)n;
-            arc.setStartAngle(a);
-            a+=90;
-        }
+        double angle = getRotate();
+        angle +=  2 * (fanDirection == FanDirection.CLOCKWISE ? 1 : -1);
+        angle %= 360;
+        setRotate( angle );
     };
 
 
