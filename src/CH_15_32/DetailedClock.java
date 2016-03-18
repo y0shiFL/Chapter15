@@ -1,10 +1,15 @@
 package CH_15_32;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -16,6 +21,8 @@ public class DetailedClock extends Pane {
     private int hour;
     private int minute;
     private int second;
+
+    Timeline timeline;
 
     // Clock pane's width and height
     private double w = 250, h = 250;
@@ -31,6 +38,9 @@ public class DetailedClock extends Pane {
         this.minute = minute;
         this.second = second;
         paintClock();
+        timeline = new Timeline(new KeyFrame(Duration.millis(1000), eventHandler));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
     }
 
     /** Return hour */
@@ -175,5 +185,16 @@ public class DetailedClock extends Pane {
             Text text = new Text(x - 4, y + 4, "" + ((i == 0) ? 12 : i));
             getChildren().add(text);
         }
+
+
     }
+
+    EventHandler<ActionEvent> eventHandler = e->
+    {
+        setCurrentTime();
+        paintClock();
+    };
+
+    public void stopTime(){timeline.pause();}
+    public void startTime(){timeline.play();}
 }
