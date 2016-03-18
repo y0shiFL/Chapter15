@@ -46,7 +46,7 @@ public class RunningFanPane extends Pane {
             getChildren().add(arc);
         }
 
-        timeline = new Timeline(new KeyFrame(Duration.millis(33), eventHandler));
+        timeline = new Timeline(new KeyFrame(Duration.millis(.5), eventHandler));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }

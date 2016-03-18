@@ -81,13 +81,13 @@ public class Ball extends Application {
     public void moveLeft()
     {
         double minX = -yoshiImage.getImage().getWidth() + 5;
-        double newX = yoshiImage.getX() - 15;
+        double newX = yoshiImage.getX() - 50;
         yoshiImage.setX( Math.max(newX, minX) );
     }
     public void moveRight()
     {
         double maxX = pane.getWidth () - 5;
-        double newX = yoshiImage.getX() + 15;
+        double newX = yoshiImage.getX() + 50;
         yoshiImage.setX( Math.min(newX, maxX) );
     }
 
@@ -95,14 +95,14 @@ public class Ball extends Application {
     {
 
         double minY = -yoshiImage.getImage().getHeight() + 5;
-        double newY = yoshiImage.getY() - 15;
+        double newY = yoshiImage.getY() - 50;
         yoshiImage.setY( Math.max(newY, minY) );
     }
 
     public void moveDown()
     {
         double maxY = pane.getWidth () - 5;
-        double newY = yoshiImage.getY() + 15;
+        double newY = yoshiImage.getY() + 50;
         yoshiImage.setY( Math.min(newY, maxY) );
     }
 
