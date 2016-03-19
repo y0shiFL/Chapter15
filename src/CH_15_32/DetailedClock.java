@@ -11,6 +11,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
+import java.awt.*;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -41,6 +42,8 @@ public class DetailedClock extends Pane {
         timeline = new Timeline(new KeyFrame(Duration.millis(1000), eventHandler));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+        paintClock();
+
     }
 
     /** Return hour */
@@ -193,6 +196,7 @@ public class DetailedClock extends Pane {
     {
         setCurrentTime();
         paintClock();
+        Toolkit.getDefaultToolkit().beep();
     };
 
     public void stopTime(){timeline.pause();}

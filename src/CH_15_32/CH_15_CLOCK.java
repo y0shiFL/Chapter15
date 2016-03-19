@@ -13,6 +13,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import java.awt.*;
+
 public class CH_15_CLOCK extends Application {
 
     public static void main(String[] args) {
@@ -39,7 +41,7 @@ public class CH_15_CLOCK extends Application {
         pane.setCenter(new DetailedClock());
         pane.setBottom(hBox);
 
-
+        Toolkit.getDefaultToolkit().beep();
 
         Scene scene = new Scene(pane, 360, 360);
         primaryStage.setScene(scene);
